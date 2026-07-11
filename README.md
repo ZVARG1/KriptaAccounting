@@ -1,4 +1,4 @@
-# KriptaAccounting
+# Kripta Accounting Application
 
 This is an accounting application - the result of my university practice
 Not really useful in real commercial accounting. It's for my portfolio - demonstration of my ability of linking Unity to SQL (SQLite in that case)
