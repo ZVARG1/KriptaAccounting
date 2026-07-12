@@ -8,4 +8,6 @@ public class Application {
     public DateTime DateCreated { get; set; }
     public string Status { get; set; }
     public string Priority { get; set; }
+
+    public int EmployeeID { get; set; }
 }

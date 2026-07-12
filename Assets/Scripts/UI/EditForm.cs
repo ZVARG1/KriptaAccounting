@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using SQLite;
 
 public class EditForm : MonoBehaviour
 {
@@ -11,6 +12,53 @@ public class EditForm : MonoBehaviour
 
     private readonly Dictionary<PropertyInfo, DynamicField> _fields
         = new();
+
+    private readonly Dictionary<string, string> fieldNames = new()
+{
+    {"ClientID", "Код клиента"},
+    {"OrganizationName", "Организация"},
+    {"INN", "ИНН"},
+    {"Phone", "Телефон"},
+    {"Email", "Электронная почта"},
+    {"ClientType", "Тип клиента"},
+
+    {"ServiceID", "Код услуги"},
+    {"ServiceName", "Название услуги"},
+    {"Direction", "Направление"},
+    {"Cost", "Стоимость"},
+    {"Periodicity", "Периодичность"},
+    {"Department", "Отдел"},
+
+    {"EmployeeID", "Код сотрудника"},
+    {"FullName", "ФИО"},
+    {"Position", "Должность"},
+
+    {"ApplicationID", "Код заявки"},
+    {"DateCreated", "Дата создания"},
+    {"Status", "Статус"},
+    {"Priority", "Приоритет"},
+
+    {"ContractID", "Код договора"},
+    {"Number", "Номер договора"},
+    {"DateStart", "Дата начала"},
+    {"DateEnd", "Дата окончания"},
+
+    {"EquipmentID", "Код оборудования"},
+    {"Type", "Тип оборудования"},
+    {"Model", "Модель"},
+    {"SerialNumber", "Серийный номер"},
+    {"Condition", "Состояние"},
+
+    {"InvoiceID", "Код счёта"},
+    {"DateIssued", "Дата выставления"},
+    {"Amount", "Сумма"},
+    {"Comment", "Комментарий"},
+
+    {"PaymentID", "Код платежа"},
+    {"DatePayment", "Дата платежа"},
+    {"Method", "Способ оплаты"},
+    {"Confirmation", "Подтверждение"}
+};
 
     public void BuildForm<T>(T data = default) where T : new()
     {
@@ -23,8 +71,14 @@ public class EditForm : MonoBehaviour
 
         foreach (var prop in props)
         {
-            if (prop.Name.EndsWith("Id"))
-                continue; // ID не редактируем
+            bool isPrimaryKey =
+    Attribute.IsDefined(
+        prop,
+        typeof(PrimaryKeyAttribute)
+    );
+
+            if (isPrimaryKey)
+                continue;// ID не редактируем
 
             DynamicField field =
                 Instantiate(fieldPrefab, fieldsContainer);
@@ -37,11 +91,18 @@ public class EditForm : MonoBehaviour
                 value = v?.ToString() ?? "";
             }
 
-            field.Setup(prop.Name, value);
+            string displayName =
+    fieldNames.TryGetValue(prop.Name, out var name)
+        ? name
+        : prop.Name;
+
+            field.Setup(displayName, value);
+
 
             _fields.Add(prop, field);
         }
     }
+
 
     public T CreateObject<T>() where T : new()
     {

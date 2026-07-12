@@ -239,6 +239,7 @@ public class DatabaseHandler
         {
             ClientID = 1,
             ServiceID = 1,
+            EmployeeID = 1,
             DateCreated = DateTime.Now.AddDays(-10),
             Status = "Новая",
             Priority = "Высокий"
@@ -248,6 +249,7 @@ public class DatabaseHandler
         {
             ClientID = 2,
             ServiceID = 2,
+            EmployeeID = 2,
             DateCreated = DateTime.Now.AddDays(-8),
             Status = "В работе",
             Priority = "Средний"
@@ -257,6 +259,7 @@ public class DatabaseHandler
         {
             ClientID = 3,
             ServiceID = 3,
+            EmployeeID = 3,
             DateCreated = DateTime.Now.AddDays(-5),
             Status = "Завершена",
             Priority = "Низкий"
@@ -266,6 +269,7 @@ public class DatabaseHandler
         {
             ClientID = 4,
             ServiceID = 4,
+            EmployeeID = 4,
             DateCreated = DateTime.Now.AddDays(-3),
             Status = "В работе",
             Priority = "Высокий"
@@ -275,6 +279,7 @@ public class DatabaseHandler
         {
             ClientID = 5,
             ServiceID = 5,
+            EmployeeID = 5,
             DateCreated = DateTime.Now,
             Status = "Новая",
             Priority = "Средний"

@@ -11,4 +11,6 @@ public class ApplicationQueryResult
     public string Status { get; set; }
 
     public string Priority { get; set; }
+
+    public int EmployeeID { get; set; }
 }

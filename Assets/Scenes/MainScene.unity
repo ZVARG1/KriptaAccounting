@@ -2063,11 +2063,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2069092476896416846, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1.2542
+      value: -443
       objectReference: {fileID: 0}
     - target: {fileID: 2069092476896416846, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 232.5089
+      value: 473
       objectReference: {fileID: 0}
     - target: {fileID: 2946469379057298884, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -2107,19 +2107,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4655453914915700460, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 491.4099
+      value: 864.05347
       objectReference: {fileID: 0}
     - target: {fileID: 4655453914915700460, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 66.25026
+      value: 127.52586
       objectReference: {fileID: 0}
     - target: {fileID: 4655453914915700460, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 737.11487
+      value: 1296.0802
       objectReference: {fileID: 0}
     - target: {fileID: 4655453914915700460, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -33.12513
+      value: -63.76293
       objectReference: {fileID: 0}
     - target: {fileID: 4924680130867096796, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_margin.z
@@ -2231,19 +2231,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6995527371711105184, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 491.4099
+      value: 864.05347
       objectReference: {fileID: 0}
     - target: {fileID: 6995527371711105184, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 66.25026
+      value: 127.52586
       objectReference: {fileID: 0}
     - target: {fileID: 6995527371711105184, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 245.70496
+      value: 432.02673
       objectReference: {fileID: 0}
     - target: {fileID: 6995527371711105184, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -33.12513
+      value: -63.76293
       objectReference: {fileID: 0}
     - target: {fileID: 8359310185613343104, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -2279,27 +2279,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8495245185855473068, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.022000002
+      value: 0.085
       objectReference: {fileID: 0}
     - target: {fileID: 8495245185855473068, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.12873974
+      value: 0.1286639
       objectReference: {fileID: 0}
     - target: {fileID: 8495245185855473068, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.8432007
+      value: 1.1800003
       objectReference: {fileID: 0}
     - target: {fileID: 8495245185855473068, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -1.0000601
+      value: 0.9999399
       objectReference: {fileID: 0}
     - target: {fileID: 8495245185855473068, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.42160034
+      value: -0.59198
       objectReference: {fileID: 0}
     - target: {fileID: 8495245185855473068, guid: d1514226af32e9f3ea29e67ab02927e4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

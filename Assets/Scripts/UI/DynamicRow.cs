@@ -10,50 +10,61 @@ public class DynamicRow : MonoBehaviour
     [SerializeField] private HorizontalLayoutGroup cellContainer;
 
     public void SetupRow(string[] columnValues,
-                         float[] columnWidths,
-                         Action buttonCallback = null)
+                     float[] columnWidths,
+                     Action buttonCallback = null)
     {
         foreach (Transform child in cellContainer.transform)
             Destroy(child.gameObject);
 
         bool isHeader = buttonCallback == null;
 
+        // Создаём все ячейки данных
         for (int i = 0; i < columnValues.Length; i++)
         {
-            bool isLastColumn = i == columnValues.Length - 1;
+            GameObject newCell =
+                Instantiate(
+                    cellPrefab,
+                    cellContainer.transform
+                );
 
-            // Последняя колонка у строк данных = кнопка
-            if (isLastColumn && !isHeader)
-            {
-                Button btn = Instantiate(buttonPrefab, cellContainer.transform);
+            var layout =
+                newCell.GetComponent<LayoutElement>() ??
+                newCell.AddComponent<LayoutElement>();
 
-                var layout = btn.GetComponent<LayoutElement>() ??
-                             btn.gameObject.AddComponent<LayoutElement>();
+            layout.preferredWidth = columnWidths[i];
+            layout.flexibleWidth = 0;
 
-                layout.preferredWidth = columnWidths[i];
-                layout.flexibleWidth = 0;
+            var text =
+                newCell.GetComponentInChildren<TextMeshProUGUI>();
 
-                var text = btn.GetComponentInChildren<TextMeshProUGUI>();
-                if (text != null)
-                    text.text = "Удалить";
+            if (text != null)
+                text.text = columnValues[i];
+        }
 
-                btn.onClick.RemoveAllListeners();
-                btn.onClick.AddListener(() => buttonCallback?.Invoke());
+        // Кнопка удаления только для строк данных
+        if (!isHeader)
+        {
+            Button btn =
+                Instantiate(
+                    buttonPrefab,
+                    cellContainer.transform
+                );
 
-                continue;
-            }
+            var layout =
+                btn.GetComponent<LayoutElement>() ??
+                btn.gameObject.AddComponent<LayoutElement>();
 
-            GameObject newCell = Instantiate(cellPrefab, cellContainer.transform);
+            layout.preferredWidth = 100;
+            layout.flexibleWidth = 0;
 
-            var cellLayout = newCell.GetComponent<LayoutElement>() ??
-                             newCell.AddComponent<LayoutElement>();
+            var text =
+                btn.GetComponentInChildren<TextMeshProUGUI>();
 
-            cellLayout.preferredWidth = columnWidths[i];
-            cellLayout.flexibleWidth = 0;
+            if (text != null)
+                text.text = "Удалить";
 
-            var cellText = newCell.GetComponentInChildren<TextMeshProUGUI>();
-            if (cellText != null)
-                cellText.text = columnValues[i];
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() => buttonCallback?.Invoke());
         }
     }
 }

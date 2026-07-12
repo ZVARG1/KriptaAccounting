@@ -169,13 +169,14 @@ public class DatabaseTableManager : MonoBehaviour
                         "Код",
                         "Клиент",
                         "Услуга",
+                        "Сотрудник",
                         "Дата",
                         "Статус",
                         "Приоритет"
                     },
                     new float[]
                     {
-                        50,80,80,100,100,100
+                        50,80,80,100,100,100,100
                     });
 
                 break;
@@ -360,267 +361,28 @@ public class DatabaseTableManager : MonoBehaviour
 
     private void ShowQuery(int index)
     {
-        if (queryManager == null)
-            return;
-
-        if (index < 0 || index >= queryManager.Queries.Count)
-            return;
-
-
         DatabaseQuery query =
             queryManager.Queries[index];
 
-
-
-        if (query.ResultType == typeof(ClientQueryResult))
-        {
-
-            var data =
-                rawSQL.ExecuteQuery<ClientQueryResult>(
-                    query.SQL
-                );
-
-
-            List<string[]> rows = new();
-
-
-            foreach (var x in data)
-            {
-                rows.Add(new[]
-                {
-                    x.ClientID.ToString(),
-                    x.OrganizationName,
-                    x.INN,
-                    x.Phone,
-                    x.Email,
-                    x.ClientType
-                });
-            }
-
-
-            RenderTable(
-                rows,
-                new[]
-                {
-                    "Код",
-                    "Название",
-                    "ИНН",
-                    "Телефон",
-                    "Email",
-                    "Тип"
-                }
+        MethodInfo method =
+            GetType().GetMethod(
+                nameof(ExecuteAndRenderQuery),
+                BindingFlags.NonPublic |
+                BindingFlags.Instance
             );
-        }
 
-
-
-        else if (query.ResultType == typeof(ContractQueryResult))
-        {
-
-            var data =
-                rawSQL.ExecuteQuery<ContractQueryResult>(
-                    query.SQL
-                );
-
-
-            List<string[]> rows = new();
-
-
-            foreach (var x in data)
-            {
-                rows.Add(new[]
-                {
-                    x.ContractID.ToString(),
-                    x.ClientID.ToString(),
-                    x.Number,
-                    x.DateStart,
-                    x.DateEnd,
-                    x.Status
-                });
-            }
-
-
-            RenderTable(
-                rows,
-                new[]
-                {
-                    "Код",
-                    "Клиент",
-                    "Номер",
-                    "Начало",
-                    "Конец",
-                    "Статус"
-                }
+        MethodInfo genericMethod =
+            method.MakeGenericMethod(
+                query.ResultType
             );
-        }
 
-
-
-        else if (query.ResultType == typeof(ApplicationQueryResult))
-        {
-
-            var data =
-                rawSQL.ExecuteQuery<ApplicationQueryResult>(
-                    query.SQL
-                );
-
-
-            List<string[]> rows = new();
-
-
-            foreach (var x in data)
+        genericMethod.Invoke(
+            this,
+            new object[]
             {
-                rows.Add(new[]
-                {
-                    x.ApplicationID.ToString(),
-                    x.ClientID.ToString(),
-                    x.ServiceID.ToString(),
-                    x.DateCreated,
-                    x.Status,
-                    x.Priority
-                });
+            query.SQL
             }
-
-
-            RenderTable(
-                rows,
-                new[]
-                {
-                    "Код",
-                    "Клиент",
-                    "Услуга",
-                    "Дата",
-                    "Статус",
-                    "Приоритет"
-                }
-            );
-        }
-
-
-
-        else if (query.ResultType == typeof(EquipmentQueryResult))
-        {
-
-            var data =
-                rawSQL.ExecuteQuery<EquipmentQueryResult>(
-                    query.SQL
-                );
-
-
-            List<string[]> rows = new();
-
-
-            foreach (var x in data)
-            {
-                rows.Add(new[]
-                {
-                    x.EquipmentID.ToString(),
-                    x.ClientID.ToString(),
-                    x.Type,
-                    x.Model,
-                    x.SerialNumber,
-                    x.Condition
-                });
-            }
-
-
-            RenderTable(
-                rows,
-                new[]
-                {
-                    "Код",
-                    "Клиент",
-                    "Тип",
-                    "Модель",
-                    "Серийный номер",
-                    "Состояние"
-                }
-            );
-        }
-
-
-
-        else if (query.ResultType == typeof(InvoiceQueryResult))
-        {
-
-            var data =
-                rawSQL.ExecuteQuery<InvoiceQueryResult>(
-                    query.SQL
-                );
-
-
-            List<string[]> rows = new();
-
-
-            foreach (var x in data)
-            {
-                rows.Add(new[]
-                {
-                    x.InvoiceID.ToString(),
-                    x.ContractID.ToString(),
-                    x.DateIssued,
-                    x.Amount,
-                    x.Status,
-                    x.Comment
-                });
-            }
-
-
-            RenderTable(
-                rows,
-                new[]
-                {
-                    "Код",
-                    "Договор",
-                    "Дата",
-                    "Сумма",
-                    "Статус",
-                    "Комментарий"
-                }
-            );
-        }
-
-
-
-        else if (query.ResultType == typeof(PaymentQueryResult))
-        {
-
-            var data =
-                rawSQL.ExecuteQuery<PaymentQueryResult>(
-                    query.SQL
-                );
-
-
-            List<string[]> rows = new();
-
-
-            foreach (var x in data)
-            {
-                rows.Add(new[]
-                {
-                    x.PaymentID.ToString(),
-                    x.InvoiceID.ToString(),
-                    x.DatePayment,
-                    x.Amount,
-                    x.Method,
-                    x.Confirmation
-                });
-            }
-
-
-            RenderTable(
-                rows,
-                new[]
-                {
-                    "Код",
-                    "Счёт",
-                    "Дата",
-                    "Сумма",
-                    "Метод",
-                    "Подтверждение"
-                }
-            );
-        }
+        );
     }
 
 
@@ -678,6 +440,110 @@ public class DatabaseTableManager : MonoBehaviour
                 null
             );
         }
+    }
+    private void ExecuteAndRenderQuery<T>(
+    string sql)
+    where T : new()
+    {
+        var data =
+            rawSQL.ExecuteQuery<T>(sql);
+
+        PropertyInfo[] props =
+            typeof(T).GetProperties();
+
+        List<string[]> rows = new();
+
+        foreach (var item in data)
+        {
+            List<string> values = new();
+
+            foreach (var prop in props)
+            {
+                values.Add(
+                    prop.GetValue(item)?
+                        .ToString()
+                    ?? ""
+                );
+            }
+
+            rows.Add(
+                values.ToArray()
+            );
+        }
+
+        string[] headers =
+            GetRussianHeaders(
+                props
+            );
+
+        RenderTable(
+            rows,
+            headers
+        );
+    }
+    private string[] GetRussianHeaders(
+        PropertyInfo[] props)
+    {
+        Dictionary<string, string> names =
+            new()
+            {
+            { "ClientID", "Код клиента" },
+            { "OrganizationName", "Организация" },
+            { "INN", "ИНН" },
+            { "Phone", "Телефон" },
+            { "Email", "Email" },
+            { "ClientType", "Тип клиента" },
+
+            { "EmployeeID", "Код сотрудника" },
+            { "FullName", "ФИО" },
+            { "Position", "Должность" },
+            { "Department", "Отдел" },
+
+            { "ApplicationID", "Код заявки" },
+            { "ServiceID", "Код услуги" },
+            { "DateCreated", "Дата создания" },
+            { "Priority", "Приоритет" },
+
+            { "ContractID", "Код договора" },
+            { "Number", "Номер" },
+            { "DateStart", "Дата начала" },
+            { "DateEnd", "Дата окончания" },
+
+            { "EquipmentID", "Код оборудования" },
+            { "Type", "Тип" },
+            { "Model", "Модель" },
+            { "SerialNumber", "Серийный номер" },
+            { "Condition", "Состояние" },
+
+            { "InvoiceID", "Код счёта" },
+            { "DateIssued", "Дата выставления" },
+            { "Amount", "Сумма" },
+            { "Comment", "Комментарий" },
+
+            { "PaymentID", "Код платежа" },
+            { "DatePayment", "Дата платежа" },
+            { "Method", "Метод оплаты" },
+            { "Confirmation", "Подтверждение" },
+
+            { "ApplicationsCount", "Количество заявок" },
+            { "TotalPayments", "Общая сумма платежей" }
+            };
+
+        string[] result =
+            new string[props.Length];
+
+        for (int i = 0; i < props.Length; i++)
+        {
+            result[i] =
+                names.TryGetValue(
+                    props[i].Name,
+                    out string value
+                )
+                ? value
+                : props[i].Name;
+        }
+
+        return result;
     }
 
 

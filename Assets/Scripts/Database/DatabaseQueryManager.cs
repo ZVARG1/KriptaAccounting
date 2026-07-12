@@ -45,10 +45,11 @@ public class DatabaseQueryManager
                 ApplicationID,
                 ClientID,
                 ServiceID,
+                EmployeeID,
                 DateCreated,
                 Status,
                 Priority
-              FROM Application
+            FROM Application
               WHERE Priority = 'Высокий'",
             typeof(ApplicationQueryResult)
         ),
@@ -142,7 +143,7 @@ public class DatabaseQueryManager
         List<string> names = new();
 
 
-        foreach(DatabaseQuery query in Queries)
+        foreach (DatabaseQuery query in Queries)
         {
             names.Add(query.Name);
         }
